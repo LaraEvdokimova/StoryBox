@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StoryBox.Common\StoryBox.Common.csproj" />
+    <ProjectReference Include="..\StoryBox.Data\StoryBox.Data.csproj" />
+  </ItemGroup>
+
+</Project>
