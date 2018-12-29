@@ -5,6 +5,7 @@ namespace StoryBox.Common.Domain.Loader
 {
     public interface IGameContext
     {
+        GameHandler GameHandler { get; set; }
         GameLibrary GameLibraryItem { get; set; }
         GameState GameState {  get;  set; }
         GameStateType GameStateType { get; set; }

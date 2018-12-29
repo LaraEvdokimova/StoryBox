@@ -12,5 +12,18 @@ namespace StoryBox.Common.Game
         }
 
         public abstract void Interpret(IGameContext context);
+        public abstract void DisplayPrompt(IGameContext context);
+        public abstract void DisplayResponse(IGameContext context);
+
+        public virtual void LoadState(IGameContext context)
+        {
+            //empty on purpose
+        }
+        public virtual void UnLoadState(IGameContext context)
+        {
+            //empty on purpose
+        }
+      
+       
     }
 }
