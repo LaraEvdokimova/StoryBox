@@ -1,4 +1,5 @@
-﻿using StoryBox.Common.Domain.Interpreter;
+﻿using System;
+using StoryBox.Common.Domain.Interpreter;
 using StoryBox.Common.Domain.Loader;
 using StoryBox.Common.Game;
 using StoryBox.Core.Domain.Game;
@@ -8,18 +9,6 @@ namespace StoryBox.Core.Domain
 {
     public class GameContext : IGameContext
     {
-        public GameContext()
-        {
-            this.GameState = new LoadPlayerState();
-
-            GameHandler = new LoadHandler();
-
-            var gameSelectionHandler = new GameSelectionHandler();
-            var gameCommandHandler = new GameCommandHandler();
-
-            GameHandler.SetSuccessor(gameSelectionHandler);
-            gameSelectionHandler.SetSuccessor(gameCommandHandler);
-        }
 
         public GameHandler GameHandler { get; set; }
         public GameStateType GameStateType { get; set; }
@@ -29,8 +18,27 @@ namespace StoryBox.Core.Domain
         public string Player { get; set; }
         public string UserInput { get; set; }
         public CommandType CurrentCommand { get; set; }
-     
-        public void Process()
+
+        private GameHandler playerLoadHandler = new LoadHandler();
+        private GameHandler gameSelectionHandler = new GameSelectionHandler();
+        private GameHandler gameCommandHandler = new GameCommandHandler();
+
+        public GameContext()
+        {
+            this.GameState = new LoadPlayerState();
+
+            GameHandler = playerLoadHandler;
+            GameHandler.SetSuccessor(gameSelectionHandler);
+            gameSelectionHandler.SetSuccessor(gameCommandHandler);
+        }
+
+        public void SetGameSelectionHandler(GameHandler handler)
+        {
+            gameSelectionHandler = handler;
+            gameSelectionHandler.SetSuccessor(gameCommandHandler);
+        }
+
+        public void GameStart()
         {
             GameHandler.Process(this);
         }
